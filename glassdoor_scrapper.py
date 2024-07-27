@@ -72,12 +72,12 @@ def get_jobs(keyword, num_jobs, verbose):
                     try:
                         salary_estimate = job_card.find_element(By.CLASS_NAME, 'JobCard_salaryEstimate__arV5J').text
                     except NoSuchElementException:
-                        salary_estimate = None  # Set to None if not found
+                        salary_estimate = -1  # Set to None if not found for other cases
 
                     try:
                         rating = job_card.find_element(By.CLASS_NAME, 'EmployerProfile_ratingContainer__ul0Ef').text
                     except NoSuchElementException:
-                        rating = None  # Set to None if not found
+                        rating = -1  # Set to None if not found
 
                     # Printing for debugging
                     if verbose:
@@ -95,10 +95,40 @@ def get_jobs(keyword, num_jobs, verbose):
                         size = driver.find_element(By.XPATH, '(//div[@class="JobDetails_overviewItemValue__xn8EF"])['+str(j)+']').text
                         j += 1
                     except NoSuchElementException:
-                        size = None
+                        size = -1
+                    try:
+                        founded = driver.find_element(By.XPATH,'(//div[@class="JobDetails_overviewItemValue__xn8EF"])['+str(j)+']').text
+                        j+=1
+                    except NoSuchElementException:
+                        founded = -1
+                    try:
+                        type_of_ownership = driver.find_element(By.XPATH,'(//div[@class="JobDetails_overviewItemValue__xn8EF"])['+str(j)+']').text
+                        j+=1
+                    except NoSuchElementException:
+                        type_of_ownership = -1
+                    try:
+                        industry = driver.find_element(By.XPATH,'(//div[@class="JobDetails_overviewItemValue__xn8EF"])['+str(j)+']').text
+                        j+=1
+                    except NoSuchElementException:
+                        industry = -1
+                    try:
+                        sector = driver.find_element(By.XPATH,'(//div[@class="JobDetails_overviewItemValue__xn8EF"])['+str(j)+']').text
+                        j+=1
+                    except NoSuchElementException:
+                        sector = -1
+                    try:
+                        revenue = driver.find_element(By.XPATH,'(//div[@class="JobDetails_overviewItemValue__xn8EF"])['+str(j)+']').text
+                        j+=1
+                    except NoSuchElementException:
+                        revenue = -1
 
                     if verbose:
                         print("Size: {}".format(size))
+                        print("Founded: {}".format(founded))
+                        print("Type of Ownership: {}".format(type_of_ownership))
+                        print("Industry: {}".format(industry))
+                        print("Sector: {}".format(sector))
+                        print("Revenue: {}".format(revenue))
 
                     jobs.append({
                         "Job Title": job_title,
@@ -108,6 +138,11 @@ def get_jobs(keyword, num_jobs, verbose):
                         "Company Name": company_name,
                         "Location": location,
                         "Size": size,
+                        "Founded": founded,
+                        "Type of ownership": type_of_ownership,
+                        "Industry": industry,
+                        "Sector": sector,
+                        "Revenue": revenue,
                     })
                 except ElementClickInterceptedException:
                     print("Error clicking on job card")
@@ -126,4 +161,3 @@ def get_jobs(keyword, num_jobs, verbose):
 
     driver.quit()
     return pd.DataFrame(jobs)  # This line converts the dictionary object into a pandas DataFrame.
-

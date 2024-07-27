@@ -5,4 +5,6 @@ scikit-learn
 matplotlib
 seaborn
 webdriver-manager
-beautifulsoup4
+ipykernel
+wordcloud
+nltk

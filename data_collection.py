@@ -4,4 +4,4 @@ import pandas as pd
 
 df = gs.get_jobs('Data Scientist',1000, False)
 
-df.to_csv('Jobs.csv')
+df.to_csv('glassdoor_jobs.csv')
