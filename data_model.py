@@ -83,3 +83,4 @@ import pickle
 pickl = {'model': gs.best_estimator_}
 pickle.dump( pickl, open( 'model_file' + ".p", "wb" ) )
 
+print(list(X_test.iloc[1,:]))
