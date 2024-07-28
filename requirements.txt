@@ -8,3 +8,4 @@ webdriver-manager
 ipykernel
 wordcloud
 nltk
+statsmodels
